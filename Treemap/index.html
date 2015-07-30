@@ -1,0 +1,79 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<script src="http://www.d3plus.org/js/d3.js"></script>
+<script src="http://www.d3plus.org/js/d3plus.js"></script>
+
+<div id="viz"></div>
+
+<script>
+
+  var sample_data = [
+    {"value": 100, "name": "alpha", "group": "group 1"},
+    {"value": 70, "name": "beta", "group": "group 2"},
+    {"value": 40, "name": "gamma", "group": "group 2"},
+    {"value": 15, "name": "delta", "group": "group 2"},
+    {"value": 5, "name": "epsilon", "group": "group 1"},
+    {"value": 1, "name": "zeta", "group": "group 1"}
+  ]
+
+  var scs_sample_data = [
+               {"Library": "George Mason ", "value": 888, "Class": "A"},
+               {"Library": "James Madison", "value": 828, "Class": "A"},
+               {"Library": "Old Dominion", "value": 1522, "Class": "A"},
+               {"Library": "Radford", "value": 374, "Class": "A"},
+               {"Library": "Richmond", "value": 396, "Class": "A"},
+               {"Library": "UVa", "value": 2994, "Class": "A"},
+               {"Library": "VCU", "value": 5354, "Class": "A"},
+               {"Library": "VCCS Germanna", "value": 40, "Class": "A"},
+               {"Library": "VCCS Reynolds", "value": 113, "Class": "A"},               
+               {"Library": "VCCS Mountain Empire", "value": 48, "Class": "A"},             
+               {"Library": "Virginia Tech", "value": 1703, "Class": "A"},             
+               {"Library": "Washington and Lee", "value": 1104, "Class": "A"},
+               {"Library": "George Mason ", "value": 61927, "Class": "B"},
+               {"Library": "James Madison", "value": 32652, "Class": "B"},
+               {"Library": "Old Dominion", "value": 141005, "Class": "B"},               
+               {"Library": "Radford", "value": 18451, "Class": "B"},            
+               {"Library": "Richmond", "value": 46979, "Class": "B"},                 
+               {"Library": "UVa", "value": 109743, "Class": "B"},               
+               {"Library": "VCU", "value": 52047, "Class": "B"},               
+               {"Library": "VCCS Germanna", "value": 1650, "Class": "B"},
+               {"Library": "VCCS Reynolds", "value": 4078, "Class": "B"},
+               {"Library": "VCCS Mountain Empire", "value": 2969, "Class": "B"},
+               {"Library": "Virginia Tech", "value": 62318, "Class": "B"},
+               {"Library": "Washington and Lee", "value": 41042, "Class": "B"},
+               {"Library": "George Mason ", "value": 3750, "Class": "C"},
+               {"Library": "James Madison", "value": 2555, "Class": "C"},
+               {"Library": "Old Dominion", "value": 3624, "Class": "C"},               
+               {"Library": "Radford", "value": 1377, "Class": "C"},            
+               {"Library": "Richmond", "value": 2330, "Class": "C"},                 
+               {"Library": "UVa", "value": 8979, "Class": "C"},               
+               {"Library": "VCU", "value": 3666, "Class": "C"},               
+               {"Library": "VCCS Germanna", "value": 263, "Class": "C"},
+               {"Library": "VCCS Reynolds", "value": 352, "Class": "C"},
+               {"Library": "VCCS Mountain Empire", "value": 205, "Class": "C"},
+               {"Library": "Virginia Tech", "value": 4782, "Class": "C"},
+               {"Library": "Washington and Lee", "value": 2867, "Class": "C"},
+               {"Library": "George Mason ", "value": 49503, "Class": "C"},
+               {"Library": "James Madison", "value": 25277, "Class": "D"},
+               {"Library": "Old Dominion", "value": 56609, "Class": "D"},               
+               {"Library": "Radford", "value": 14910, "Class": "D"},            
+               {"Library": "Richmond", "value": 34218, "Class": "D"},                 
+               {"Library": "UVa", "value": 106376, "Class": "D"},               
+               {"Library": "VCU", "value": 46170, "Class": "D"},               
+               {"Library": "VCCS Germanna", "value": 1324, "Class": "D"},
+               {"Library": "VCCS Reynolds", "value": 3905, "Class": "D"},
+               {"Library": "VCCS Mountain Empire", "value": 2632, "Class": "D"},
+               {"Library": "Virginia Tech", "value": 59197, "Class": "D"},
+               {"Library": "Washington and Lee", "value": 45271, "Class": "D"}
+        ]
+
+  var visualization = d3plus.viz()
+    .container("#viz")
+    .data(scs_sample_data)
+    .type("tree_map")
+    .id(["Class","Library"])
+    .size("value")
+    .draw()
+
+</script>

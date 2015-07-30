@@ -1,0 +1,14 @@
+[
+  {
+    "title":"Held in 1",
+    "ranges":[1500,2250,3000],
+    "measures":[2200],
+    "markers":[2500]
+  },
+  {
+    "title":"Held in 2",
+    "ranges":[256,512,1024],
+    "measures":[768],
+    "markers":[900]
+  }
+]

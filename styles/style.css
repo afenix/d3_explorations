@@ -1,0 +1,62 @@
+#punchCardBody {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+}
+.axis path,.axis line {
+  fill: none;
+  stroke: #b6b6b6;
+  shape-rendering: crispEdges;
+}
+.tick text {
+  fill: #999;
+}
+g.journal.active {
+  cursor: pointer;
+}
+text.label {
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+text.value {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#waffleBody {
+  font: 18px Arial;
+}
+
+p {
+  margin: 0;
+}
+#waffle {
+  margin-bottom: 30px;
+}
+
+#legend {
+  font: 13px Arial;
+}
+
+#bulletBody {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  padding-top: 40px;
+  position: relative;
+  width: 800px;
+}
+
+#bulletButton {
+  position: absolute;
+  right: 40px;
+  top: 10px;
+}
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #000; stroke-width: 2px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: #eee; }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+.bullet .measure.s0 { fill: steelblue; }
+.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .subtitle { fill: #999; }
