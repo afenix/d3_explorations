@@ -1,46 +1,72 @@
 <!doctype html>
 <meta charset="utf-8">
-
+<head>
+  
 <!-- load D3js -->
 <script src="http://www.d3plus.org/js/d3.js"></script>
 
 <!-- load D3plus after D3js -->
 <script src="http://www.d3plus.org/js/d3plus.js"></script>
+  
+</head>
+<body>
+  
+  <!-- create container element for visualization -->
+  <div id="viz">
+  <script>
 
-<!-- create container element for visualization -->
-<div id="viz"></div>
+   var colors = d3plus.color.scale.range()
 
-<script>
-  // sample data array
-  var total_holdlings = [
-    {"value": 129776, "name": "Unique", "group": "My Library"},
-    {"value": 1162958, "name": "Unique", "group": "All Libraries"},
-    {"value": 364353, "name": "2-4", "group": "My Library"},
-    {"value": 2452989, "name": "2-4", "group": "All Libraries"},
-    {"value": 267331, "name": "5-9", "group": "My Library"},
-    {"value": 2117289, "name": "5-9", "group": "All Libraries"},
-    {"value": 6055, "name": "10+", "group": "My Library"},
-    {"value": 65494, "name": "10+", "group": "All Libraries"}
-  ]
+    colors = colors.concat(["#66BC51", "#00A2E7"])
 
-  var percent_holdlings = [
-    {"value": 17, "name": "Unique", "group": "My Library"},
-    {"value": 20, "name": "Unique", "group": "All Libraries"},
-    {"value": 48, "name": "2-4", "group": "My Library"},
-    {"value": 42, "name": "2-4", "group": "All Libraries"},
-    {"value": 34, "name": "5-9", "group": "My Library"},
-    {"value": 36, "name": "5-9", "group": "All Libraries"},
-    {"value": 1, "name": "10+", "group": "My Library"},
-    {"value": 1, "name": "10+", "group": "All Libraries"}
-  ]
-  // instantiate d3plus
-  var visualization = d3plus.viz()
-    .container("#viz")     // container DIV to hold the visualization
-    .data(percent_holdlings) // data to use with the visualization
-    .type("bubbles")       // visualization type
-    .id(["group", "name"]) // nesting keys
-    .depth(1)              // 0-based depth
-    .size("value")         // key name to size bubbles
-    .color("name")        // color by each group
-    .draw()                // finally, draw the visualization!
-</script>
+    // sample data array
+    var total_holdlings = [
+      {"value": 129776, "name": "Unique", "group": "My Library"},
+      {"value": 1162958, "name": "Unique", "group": "All Libraries"},
+      {"value": 364353, "name": "2-4", "group": "My Library"},
+      {"value": 2452989, "name": "2-4", "group": "All Libraries"},
+      {"value": 267331, "name": "5-9", "group": "My Library"},
+      {"value": 2117289, "name": "5-9", "group": "All Libraries"},
+      {"value": 6055, "name": "10+", "group": "My Library"},
+      {"value": 65494, "name": "10+", "group": "All Libraries"}
+    ]
+
+    var percent_holdlings = [
+      {"value": 17, "name": "Unique", "group": "My Library"},
+      {"value": 20, "name": "Unique", "group": "All Libraries"},
+      {"value": 48, "name": "2-4", "group": "My Library"},
+      {"value": 42, "name": "2-4", "group": "All Libraries"},
+      {"value": 34, "name": "5-9", "group": "My Library"},
+      {"value": 36, "name": "5-9", "group": "All Libraries"},
+      {"value": 1, "name": "10+", "group": "My Library"},
+      {"value": 1, "name": "10+", "group": "All Libraries"}
+    ]
+    // instantiate d3plus
+    var visualization = d3plus.viz()
+      .container("#viz")     // container DIV to hold the visualization
+      .data(total_holdlings) // data to use with the visualization
+      .type("bubbles")       // visualization type
+      .id(["group", "name"]) // nesting keys
+      .depth(1)              // 0-based depth
+      .labels({"value": true, "resize": true, "font": {"size": 12, "padding": 2}})
+      .font({"family": "helvetica", "weight": 400})
+      .title("Total Holdings")
+      .title({
+        "sub" : "Comparitive size between my library and all libraries", 
+        "total" : true
+      })
+      .legend({
+        "order": {
+          "sort": "desc",
+          "value": "value"
+        }
+      })
+      .size("value")         // key name to size bubbles
+      .color("group")     // determines which value will dictate colors applied
+      // .color(function(d){
+      //   return d.value > 0 ? "#66BC51" : "#00A2E7";
+      // }) // color by each group
+      .draw()                // finally, draw the visualization!
+  </script>
+</div>
+</body>
