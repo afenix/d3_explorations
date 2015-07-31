@@ -10,7 +10,7 @@
 <body id="waffleBody">
 <h1>D3 Prototype of Waffle Chart</h1>
 
-  <h3>The below graphic shows summed data for all titles held between the pub years 2005-2001.</h3>
+  <h3>Total title counts held.</h3>
 
 <div id="title">
   <p>Tesing utility for Group Collection Overview Page</p>
@@ -22,9 +22,6 @@
 <div id="squareLegend">
 </div>
 </body>
-
-
-
 
 <script>
 
@@ -38,29 +35,32 @@ var width,
     gap = 1,
     theData = [];  
 
-var color = d3.scale.category20();
+var color = d3.scale.category10();
+
+
 
 var dataset;
 
-d3.csv("../data/pub-years.csv", function(error, data) {
+d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
   dataset = data;
   //total
-  total = d3.sum(data, function(d) { return d.years; });
+  total = d3.sum(data, function(d) { return d.total; });
 
   //value of a square
   squareValue = total / (widthSquares*heightSquares);
+  squareRound = Math.round(squareValue);
   
   //remap data
   data.forEach(function(d, i) 
   {
-      d.years = +d.years;
-      d.units = Math.floor(d.years/squareValue);
+      d.total = +d.total;
+      d.units = Math.floor(d.total/squareValue);
       theData = theData.concat(
         Array(d.units+1).join(1).split('').map(function()
           {
             return {  squareValue:squareValue,                      
                       units: d.units,
-                      years: d.years,
+                      total: d.total,
                       groupIndex: i};
           })
         );
@@ -98,7 +98,7 @@ d3.csv("../data/pub-years.csv", function(error, data) {
       .append("title")
         .text(function (d,i) 
           {
-            return "Years between 2005-2001: " + data[d.groupIndex].name + " | " +  d.years + " , " + d.units + "%"
+            return data[d.groupIndex].name + " | " +  d.total + " , " + d.units + "%"
           });
 
    //add legend with categorical data
@@ -128,10 +128,10 @@ d3.csv("../data/pub-years.csv", function(error, data) {
       .attr('transform', "translate(100,0)");
 
     totalLegend.append("text")    
-      .attr('x', '60')  
+      .attr('x', '300')  
       .attr('y', '15')     
       .attr('font-size', '18px')
-      .text("Each Square: " + squareValue + "  Total: " + total)
+      .text("Each Square: " + squareRound + "  Total: " + total)
       .attr("fill", "#444444");
 
 });
