@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>D3 Page Template</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+  <script>
+    $.noConflict();
+    // Code that uses other library's $ can follow here.
+  </script>
   <script type="text/javascript" src="../d3/d3.js"></script>
   <link rel="stylesheet" type="text/css" href="../styles/style.css">
 </head>
@@ -35,7 +40,7 @@ var width,
     gap = 1,
     theData = [];  
 
-var color = d3.scale.category10();
+var color = d3.scale.category20c();
 
 var dataset;
 
@@ -76,6 +81,7 @@ d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
       .data(theData)
       .enter()
       .append("rect")
+      .attr("data-library", function(d) { return d.groupIndex })
       .attr("width", squareSize)
       .attr("height", squareSize)
       .attr("fill", function(d)
@@ -133,6 +139,9 @@ d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
       .attr("fill", "#444444");
 
 });
-
+jQuery(function() {
+  console.log('here');
+jQuery('[data-library]').hover(function(){var libraryId = jQuery(this).data('library'); jQuery('[data-library=' + libraryId + ']').attr('fill', '#ccccee'); });
+});
 </script>
 </html>
