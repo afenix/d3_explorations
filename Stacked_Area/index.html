@@ -1,37 +1,85 @@
-<!doctype html>
-<meta charset="utf-8">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="../d3/nv.d3.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="../d3/nv.d3.min.js"></script>
 
-<!-- load D3js -->
-<script src="http://www.d3plus.org/js/d3.js"></script>
-
-<!-- load D3plus after D3js -->
-<script src="http://www.d3plus.org/js/d3plus.js"></script>
-
-<!-- create container element for visualization -->
-<div id="viz"></div>
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class='with-3d-shadow with-transitions'>
+<button onclick="expandLegend();">Expand/Contract Legend</button>
+    <script>
+        var expandLegend = function() {
+            var exp = chart.legend.expanded();
+            chart.legend.expanded(!exp);
+            chart.update();
+        }
+    </script>
+<svg id="chart1"></svg>
 
 <script>
-  // sample data array
-  var sample_data = [
-    {"year": 1993, "name":"alpha", "value": 20},
-    {"year": 1994, "name":"alpha", "value": 30},
-    {"year": 1995, "name":"alpha", "value": 60},
-    {"year": 1993, "name":"beta", "value": 40},
-    {"year": 1994, "name":"beta", "value": 60},
-    {"year": 1995, "name":"beta", "value": 10},
-    {"year": 1994, "name":"gamma", "value": 10},
-    {"year": 1995, "name":"gamma", "value": 40}
-  ]
-  // instantiate d3plus
-  var visualization = d3plus.viz()
-    .container("#viz")  // container DIV to hold the visualization
-    .data(sample_data)  // data to use with the visualization
-    .type("stacked")    // visualization type
-    .id("name")         // key for which our data is unique on
-    .text("name")       // key to use for display text
-    .y("value")         // key to use for y-axis
-    .x("year")          // key to use for x-axis
-    .time("year")       // key to use for time
-    .draw()             // finally, draw the visualization!
+    var testData = [
+        {
+          "key": "Indiana University Purdue",
+          "values": [[1949,0],[1950,0],[1951,0],[1952,0],[1953,0],[1954,0],[1955,0],[1956,0],[1957,0],[1958,0],[1959,0],[1960,0],[1961,0],[1962,0],[1963,0],[1964,0],[1965,0],[1966,0],[1967,0],[1968,0],[1969,0],[1970,0],[1971,0],[1972,0],[1973,0],[1974,0],[1975,0],[1976,0],[1977,0],[1978,0],[1979,0],[1980,0],[1981,0],[1982,0],[1983,0],[1984,0],[1985,0],[1986,0],[1987,0],[1988,0],[1989,14967],[1990,889],[1991,1294],[1992,1071],[1993,775],[1994,8686],[1995,6593],[1996,1376],[1997,1301],[1998,5933],[1999,1572],[2000,13983],[2001,2431],[2002,2913],[2003,5580],[2004,9223],[2005,2168],[2006,2347],[2007,2542],[2008,2414],[2009,3323],[2010,56694],[2011,4539],[2012,4465],[2013,4312],[2014,60],[2015,0],[2016,0]]
+          },
+          {
+           "key": "Indiana University Purdue University at Indianapolis",
+          "values":[[1949,0],[1950,0],[1951,0],[1952,0],[1953,0],[1954,0],[1955,0],[1956,0],[1957,0],[1958,0],[1959,0],[1960,0],[1961,0],[1962,0],[1963,0],[1964,0],[1965,0],[1966,0],[1967,0],[1968,0],[1969,0],[1970,0],[1971,0],[1972,0],[1973,0],[1974,0],[1975,0],[1976,0],[1977,0],[1978,0],[1979,0],[1980,0],[1981,0],[1982,0],[1983,0],[1984,0],[1985,0],[1986,0],[1987,0],[1988,0],[1989,8],[1990,8],[1991,14],[1992,15],[1993,1],[1994,105],[1995,22],[1996,2],[1997,6],[1998,104],[1999,5],[2000,186476],[2001,15343],[2002,14013],[2003,19421],[2004,18964],[2005,13380],[2006,14901],[2007,14664],[2008,15451],[2009,15503],[2010,175155],[2011,16252],[2012,14264],[2013,12614],[2014,1028],[2015,0],[2016,0]]    
+          },
+          {
+            "key": "Butler University",
+          "values":[[1949,0],[1950,0],[1951,0],[1952,0],[1953,0],[1954,0],[1955,0],[1956,0],[1957,0],[1958,0],[1959,0],[1960,0],[1961,0],[1962,0],[1963,0],[1964,0],[1965,0],[1966,0],[1967,0],[1968,0],[1969,0],[1970,0],[1971,0],[1972,0],[1973,0],[1974,0],[1975,0],[1976,0],[1977,0],[1978,0],[1979,0],[1980,0],[1981,0],[1982,0],[1983,0],[1984,0],[1985,0],[1986,0],[1987,0],[1988,0],[1989,0],[1990,17254],[1991,4558],[1992,3123],[1993,1476],[1994,8691],[1995,2187],[1996,1364],[1997,975],[1998,3734],[1999,883],[2000,17407],[2001,2159],[2002,2893],[2003,7605],[2004,6502],[2005,3365],[2006,3198],[2007,3820],[2008,4443],[2009,4490],[2010,71724],[2011,5848],[2012,4322],[2013,3282],[2014,57],[2015,0],[2016,0]]
+          },
+          {
+            "key": "Saint Mary's College",
+          "values":[[1949,0],[1950,0],[1951,0],[1952,0],[1953,0],[1954,0],[1955,0],[1956,0],[1957,0],[1958,0],[1959,0],[1960,0],[1961,0],[1962,0],[1963,0],[1964,0],[1965,0],[1966,0],[1967,0],[1968,0],[1969,0],[1970,0],[1971,0],[1972,0],[1973,0],[1974,0],[1975,0],[1976,0],[1977,0],[1978,0],[1979,0],[1980,0],[1981,0],[1982,0],[1983,0],[1984,0],[1985,0],[1986,0],[1987,0],[1988,0],[1989,0],[1990,0],[1991,2],[1992,19925],[1993,1645],[1994,7631],[1995,1865],[1996,678],[1997,629],[1998,5698],[1999,976],[2000,14486],[2001,1951],[2002,1730],[2003,6450],[2004,4498],[2005,1390],[2006,1754],[2007,1591],[2008,1876],[2009,2379],[2010,65889],[2011,2781],[2012,2734],[2013,2737],[2014,78],[2015,0],[2016,0]]    
+          }
+    ];
+    var colors = d3.scale.category20c();
+    var chart;
+    nv.addGraph(function() {
+        chart = nv.models.stackedAreaChart()
+            .margin({left: 100})
+            .useInteractiveGuideline(true)
+            .x(function(d) { return d[0] })
+            .y(function(d) { return d[1] })
+            .controlLabels({stacked: "Stacked"})
+            .rightAlignYAxis(false)      //Let's move the y-axis to the right side.
+            .duration(300);
+        chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+        chart.yAxis.tickFormat(d3.format(',.4f'));
+        chart.legend.vers('furious');
+        d3.select('#chart1')
+            .datum(testData)
+            .transition().duration(1000)
+            .call(chart)
+            .each('start', function() {
+                setTimeout(function() {
+                    d3.selectAll('#chart1 *').each(function() {
+                        if(this.__transition__)
+                            this.__transition__.duration = 1;
+                    })
+                }, 0)
+            });
+        nv.utils.windowResize(chart.update);
+        return chart;
+    });
 </script>
-view raw
+</body>
+</html>
