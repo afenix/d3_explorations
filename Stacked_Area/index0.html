@@ -12,12 +12,8 @@
   <h1>D3 Prototype of Stacked Area Graph</h1>
 
   <h3>The graphic below shows last item add date over time for libraries within a sample group.</h3>
-  <blockquote><em>The essence of data graphics is visual comparisons.</em>
-      <br /><small>&ndash; Bret Victor</small>
-  </blockquote>
 
   <h2>Last Add Date </h2>
-
 
 <style>
 
@@ -64,10 +60,10 @@
 
   chart.xAxis
       .showMaxMin(false)
-      .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+      // .tickFormat(function(d) { return d[0] });
 
   chart.yAxis
-      .tickFormat(d3.format(',.2f'));
+      // .tickFormat(d3.format('8,.2f'));
 
   d3.select('#chart svg')
     .datum(data)
