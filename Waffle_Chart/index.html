@@ -140,8 +140,7 @@ d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
 
 });
 jQuery(function() {
-  console.log('here');
-jQuery('[data-library]').hover(function(){var libraryId = jQuery(this).data('library'); jQuery('[data-library=' + libraryId + ']').attr('fill', '#ccccee'); });
+  jQuery('[data-library]').hover(function(){var libraryId = jQuery(this).data('library'); jQuery('[data-library=' + libraryId + ']').attr('fill', '#ccccee'); });
 });
 </script>
 </html>
