@@ -2,33 +2,36 @@
 <meta charset="utf-8">
 <html>
   <head>
-    <script type="text/javascript" src="../d3/d3.js"></script>
     <link rel="stylesheet" type="text/css" href="../styles/style.css">
+    <script type="text/javascript" src="../d3/d3.js"></script>
   </head>
   <body>
     <div id="chart"></div>
 
     <script type="text/javascript">
-      var margin = { top: 50, right: 0, bottom: 100, left: 30 },
+      var margin = { top: 50, right: 0, bottom: 100, left: 150 },
           width = 960 - margin.left - margin.right,
-          height = 430 - margin.top - margin.bottom,
+          height = 600 - margin.top - margin.bottom,
           gridSize = Math.floor(width / 22),
           legendElementWidth = gridSize*2,
           buckets = 9,
           colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
-          libraries = ["All Libraries", "George Mason", "James Madison", "Old Dominion", "Radford", "Richmond", "UVa", "VCU", "VCCS Germanna", "VCCS Reynolds", "VCCS Mountain Empire", "Virginia Tech", "Washington and Lee"],
+          libraries = ["George Mason", "James Madison", "Old Dominion", "Radford", "Richmond", "UVa", "VCU", "VCCS Germanna", "VCCS Reynolds", "VCCS Mountain Empire", "Virginia Tech", "Washington and Lee"],
           subclass = ["A","B","C","D","E","F","G","H","J","K","L","M","N","P","Q","R","S","T","U","V","W","Z"];
 
-      d3.csv("../data/heatmap_data.csv",
+      d3.csv("../data/subjects-by-size2.csv",
         function(d) {
           return {
             name: +d.name,
             subclass: +d.subclass,
-            value: +d.value
+            value: +d.value,
+            x: +d.x,
+            y: +d.y
           };
         },
 
         function(error, data) {
+
           var colorScale = d3.scale.quantile()
               .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
               .range(colors);
@@ -49,7 +52,7 @@
                 .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
                 .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "nameLabel mono axis axis-workweek" : "nameLabel mono axis"); });
 
-          var subclassLabels = svg.selectAll(".subclassLabel")
+          var timeLabels = svg.selectAll(".timeLabel")
               .data(subclass)
               .enter().append("text")
                 .text(function(d) { return d; })
@@ -57,13 +60,13 @@
                 .attr("y", 0)
                 .style("text-anchor", "middle")
                 .attr("transform", "translate(" + gridSize / 2 + ", -6)")
-                .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "subclassLabel mono axis axis-worktime" : "subclassLabel mono axis"); });
+                .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
-          var heatMap = svg.selectAll(".subclass")
+          var heatMap = svg.selectAll(".subclass") 
               .data(data)
               .enter().append("rect")
-              .attr("x", function(d) { return d.value; })
-              .attr("y", function(d) { return d.value; })
+              .attr("x", function(d) { return (d.x - 1) * gridSize; })
+              .attr("y", function(d) { return (d.y - 1) * gridSize; }) 
               .attr("rx", 4)
               .attr("ry", 4)
               .attr("class", "subclass bordered")
