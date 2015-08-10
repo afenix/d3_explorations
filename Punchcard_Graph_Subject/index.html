@@ -10,16 +10,16 @@
     <h3>Punchcard chart showing collection size</h3>
 
     <div id="chart"></div>
-    
+
     <script type="text/javascript">
-        
+
     var margin = {top: 10, right: 10, bottom: 10, left: 30}
     var width = 1280 - margin.left - margin.right
     var height = 405 - margin.top - margin.bottom
     var padding = 3
     var xLabelHeight = 30
     var yLabelWidth = 150
-    var borderWidth = 3
+    var borderWidth = 0
     var duration = 500
 
     var chart = d3.select('#chart').append('svg')
@@ -211,7 +211,7 @@
         vert.enter().append('line')
             .attr('class', 'vert')
             .attr('y1', xLabelHeight + borderWidth / 2)
-            .attr('stroke', '#888')
+            .attr('stroke', '#fff')
             .attr('stroke-width', 1)
             .style('shape-rendering', 'crispEdges')
             .style('stroke-opacity', 0)
@@ -234,8 +234,8 @@
 
         horiz.enter().append('line')
             .attr('class', 'horiz')
-            .attr('x1', yLabelWidth + borderWidth / 2)
-            .attr('stroke', '#888')
+            .attr('x1', 0 + borderWidth / 2)
+            .attr('stroke', '#eee')
             .attr('stroke-width', 1)
             .style('shape-rendering', 'crispEdges')
             .style('stroke-opacity', 0)
