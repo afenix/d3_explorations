@@ -56,7 +56,7 @@
 
         d3.json("../data/pub_years.json", function(data) {
           dataset = data;
-console.log(dataset);
+
           x.domain([start_year, end_year]);
           var xScale = d3.scale.linear()
             .domain([start_year, end_year])
@@ -68,7 +68,7 @@ console.log(dataset);
             .call(xAxis);
 
           for (var j = 0; j < data.length; j++) {
-            var g = svg.append("g").attr("class","journal");
+            var g = svg.append("g").attr("class","library");
 
             var circles = g.selectAll("circle")
               .data(data[j]['values'])

@@ -68,12 +68,15 @@
                {"Library": "Washington and Lee", "value": 45271, "Class": "D"}
         ]
 
+  var colors = d3.scale.category20c();
+
   var visualization = d3plus.viz()
     .container("#viz")
     .data(scs_sample_data)
     .type("tree_map")
     .id(["Class","Library"])
     .size("value")
+    .color(d3.scale.category20c())
     .draw()
 
 </script>

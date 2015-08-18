@@ -6,6 +6,21 @@
     <title>punchcard-js</title>
     <link rel="stylesheet" type="text/css" href="../styles/style.css">
   </head>
+  <style>
+ <style type="text/css">
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
+    }
+
+    .axis text {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 10px;
+    }
+  </style>
+
   <body>
     <h3>Punchcard chart showing collection size</h3>
 
@@ -15,7 +30,7 @@
 
     var margin = {top: 10, right: 10, bottom: 10, left: 30}
     var width = 1280 - margin.left - margin.right
-    var height = 405 - margin.top - margin.bottom
+    var height = 550 - margin.top - margin.bottom
     var padding = 3
     var xLabelHeight = 30
     var yLabelWidth = 150
@@ -120,7 +135,7 @@
             .duration(duration)
             .attr('r', function(d){ return r(d) })
             .attr('cx', function(d, i){ return i * maxR * 2 + maxR })
-            .style('fill', function(d){ return 'rgb(' + c(d) + ',' + c(d) + ',' + c(d) + ')' })
+            .style('fill', function(d){ return 'rgb(95,174,79)' })
 
         var dotLabels = rows.selectAll('.dot-label')
             .data(function(d){ return d.values })
