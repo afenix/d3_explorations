@@ -33,9 +33,9 @@
 var total = 0;
 var width,
     height,
-    widthSquares = 50,
-    heightSquares = 31,
-    squareSize = 15,
+    rowCount = 50,
+    columnCount = 30,
+    squareSize = 11,
     squareValue = 0,
     gap = 1,
     theData = [];  
@@ -50,16 +50,18 @@ d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
   total = d3.sum(data, function(d) { return d.total; });
 
   //value of a square
-  squareValue = total / (widthSquares*heightSquares);
-  squareRound = Math.round(squareValue);
+  squareValue = total / (rowCount * columnCount);
+  squareRound = Math.round(squareValue / 100) * 100;
   
   //remap data
+  var unitCount = 0;
   data.forEach(function(d, i) 
   {
-      d.total = +d.total;
-      d.units = Math.floor(d.total/squareValue);
+      d.total = + d.total;
+      d.units = Math.round(d.total/squareRound);
+      unitCount += d.units;
       theData = theData.concat(
-        Array(d.units+1).join(1).split('').map(function()
+        Array(d.units).join(1).split('').map(function()
           {
             return {  squareValue:squareValue,                      
                       units: d.units,
@@ -69,13 +71,13 @@ d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
         );
   });
 
-  width = (squareSize*widthSquares) + widthSquares*gap + 25;
-  height = (squareSize*heightSquares) + heightSquares*gap + 25;
-
+  var graphicWidth = (columnCount * (squareSize + gap));
+  var graphicHeight = Math.floor(unitCount / columnCount) * (squareSize + gap) - gap;
+  
   var waffle = d3.select("#waffle")
       .append("svg")
-      .attr("width", width)
-      .attr("height", height)
+      .attr("width", graphicWidth)
+      .attr("height", graphicHeight)
       .append("g")
       .selectAll("div")
       .data(theData)
@@ -84,46 +86,27 @@ d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
       .attr("data-library", function(d) { return d.groupIndex })
       .attr("width", squareSize)
       .attr("height", squareSize)
-      .attr("fill", function(d)
-      {
-        return color(d.groupIndex);
-      })
-      .attr("x", function(d, i)
+      .attr("fill", function(datum, index)
         {
-          //group n squares for column
-          col = Math.floor(i/heightSquares);
-          return (col*squareSize) + (col*gap);
+          return color(datum.groupIndex);
         })
-      .attr("y", function(d, i)
-      {
-        row = i%heightSquares;
-        return (heightSquares*squareSize) - ((row*squareSize) + (row*gap))
-      })
+      .attr("x", function(datum, index)
+        {
+          var columnIndex = index % columnCount;
+          return columnIndex * (squareSize + gap);
+        })
+      .attr("y", function(datum, index)
+        {
+          var rowIndex = Math.floor(index / columnCount);
+          return rowIndex * (squareSize + gap);
+        })
       .append("title")
         .text(function (d,i) 
           {
             return data[d.groupIndex].name + " | " +  d.total + " , " + d.units + "%"
           });
 
-   //add legend with categorical data
-   var legend = d3.select("#legend")
-    .append("svg")
-    .attr('width', 800)
-    .attr('height', 500)
-    .append('g')
-    .selectAll("div")
-    .data(data)
-    .enter()
-      .append("g")
-      .attr('transform', function(d,i){ return "translate(0," + i*20 + ")";});
-  legend.append("rect")
-    .attr("width", 18)
-    .attr("height", 18)
-    .style("fill", function(d, i) { return color(i)});
-  legend.append("text")
-    .attr("x", 25)
-    .attr("y", 13)
-    .text( function(d) { return d.name});
+    //add legend with categorical data
 
     //add value of a unit square
     var totalLegend = d3.select("#legend")
@@ -138,9 +121,6 @@ d3.csv("../data/ALI_TotalCollection.csv", function(error, data) {
       .text("Each Square: " + squareRound + "  Total: " + total)
       .attr("fill", "#444444");
 
-});
-jQuery(function() {
-  jQuery('[data-library]').hover(function(){var libraryId = jQuery(this).data('library'); jQuery('[data-library=' + libraryId + ']').attr('fill', '#ccccee'); });
 });
 </script>
 </html>
